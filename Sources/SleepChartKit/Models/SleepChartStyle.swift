@@ -7,6 +7,9 @@ public enum SleepChartStyle {
     
     /// Circular chart with color-coded segments
     case circular
+    
+    /// Weekly chart showing multiple days of sleep data
+    case weekly(WeeklyChartLayout)
 }
 
 /// Configuration options for circular sleep charts

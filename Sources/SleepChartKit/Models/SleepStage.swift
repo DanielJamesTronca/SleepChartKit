@@ -59,4 +59,14 @@ public enum SleepStage: Int, CaseIterable, Hashable {
     public var sortOrder: Int {
         rawValue
     }
+    
+    /// Whether this stage represents actual sleep (not awake or in bed)
+    public var isAsleep: Bool {
+        switch self {
+        case .asleepREM, .asleepCore, .asleepDeep, .asleepUnspecified:
+            return true
+        case .awake, .inBed:
+            return false
+        }
+    }
 }

@@ -32,11 +32,17 @@ public struct SleepChartView: View {
     /// The sleep samples to display in the chart
     private let samples: [SleepSample]
     
+    /// The weekly sleep data (for weekly charts only)
+    private let weeklySamples: [DailySleepData]?
+    
     /// The visual style of the chart
     private let style: SleepChartStyle
     
     /// Configuration for circular charts
     private let circularConfig: CircularChartConfiguration
+    
+    /// Configuration for weekly charts
+    private let weeklyConfig: WeeklyChartConfiguration
     
     /// Provider for sleep stage colors
     private let colorProvider: SleepStageColorProvider
@@ -72,11 +78,41 @@ public struct SleepChartView: View {
         displayNameProvider: SleepStageDisplayNameProvider = DefaultSleepStageDisplayNameProvider()
     ) {
         self.samples = samples
+        self.weeklySamples = nil
         self.style = style
         self.circularConfig = circularConfig
+        self.weeklyConfig = .default
         self.colorProvider = colorProvider
         self.durationFormatter = durationFormatter
         self.timeSpanGenerator = timeSpanGenerator
+        self.displayNameProvider = displayNameProvider
+    }
+    
+    /// Creates a new weekly sleep chart view with the specified configuration.
+    ///
+    /// - Parameters:
+    ///   - weeklySamples: The weekly sleep data to display
+    ///   - layout: The layout orientation for the weekly chart (default: .vertical)
+    ///   - weeklyConfig: Configuration for weekly charts (default: .default)
+    ///   - colorProvider: Provider for sleep stage colors (default: DefaultSleepStageColorProvider)
+    ///   - durationFormatter: Formatter for duration display (default: DefaultDurationFormatter)
+    ///   - displayNameProvider: Provider for stage names (default: DefaultSleepStageDisplayNameProvider)
+    public init(
+        weeklySamples: [DailySleepData],
+        layout: WeeklyChartLayout = .vertical,
+        weeklyConfig: WeeklyChartConfiguration = .default,
+        colorProvider: SleepStageColorProvider = DefaultSleepStageColorProvider(),
+        durationFormatter: DurationFormatter = DefaultDurationFormatter(),
+        displayNameProvider: SleepStageDisplayNameProvider = DefaultSleepStageDisplayNameProvider()
+    ) {
+        self.samples = []
+        self.weeklySamples = weeklySamples
+        self.style = .weekly(layout)
+        self.circularConfig = .default
+        self.weeklyConfig = weeklyConfig
+        self.colorProvider = colorProvider
+        self.durationFormatter = durationFormatter
+        self.timeSpanGenerator = DefaultTimeSpanGenerator()
         self.displayNameProvider = displayNameProvider
     }
     
@@ -119,6 +155,8 @@ public struct SleepChartView: View {
             timelineChartView
         case .circular:
             circularChartView
+        case .weekly(let layout):
+            weeklyChartView(layout: layout)
         }
     }
     
@@ -170,6 +208,25 @@ public struct SleepChartView: View {
                 durationFormatter: durationFormatter,
                 displayNameProvider: displayNameProvider
             )
+        }
+    }
+    
+    /// Weekly chart view with the specified layout
+    private func weeklyChartView(layout: WeeklyChartLayout) -> some View {
+        Group {
+            if let weeklySamples = weeklySamples {
+                SleepWeeklyChartView(
+                    weeklySamples: weeklySamples,
+                    layout: layout,
+                    colorProvider: colorProvider,
+                    durationFormatter: durationFormatter,
+                    displayNameProvider: displayNameProvider,
+                    weeklyConfig: weeklyConfig
+                )
+            } else {
+                Text("Weekly data not available")
+                    .foregroundColor(.secondary)
+            }
         }
     }
     

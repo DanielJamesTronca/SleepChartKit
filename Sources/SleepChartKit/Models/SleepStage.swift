@@ -3,7 +3,7 @@ import Foundation
 import HealthKit
 #endif
 
-public enum SleepStage: Int, CaseIterable, Hashable {
+public enum SleepStage: Int, CaseIterable, Hashable, Codable {
     case awake = 0
     case asleepREM = 1
     case asleepCore = 2

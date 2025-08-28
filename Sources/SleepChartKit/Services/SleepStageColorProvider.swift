@@ -45,3 +45,37 @@ public struct DefaultSleepStageColorProvider: SleepStageColorProvider {
     }
     
 }
+
+public struct CustomSleepStageColorProvider: SleepStageColorProvider {
+    
+    var awakeColour: Color
+    var remColour: Color
+    var coreColour: Color
+    var deepColour: Color
+    var unspecifiedColour: Color
+    var inBedColour: Color
+    
+    public init(awake: Color? = nil, REM: Color? = nil, core: Color? = nil, deep: Color? = nil, unspecified: Color? = nil, inBed: Color? = nil) {
+        
+        self.awakeColour = awake ?? .orange
+        self.remColour = REM ?? .cyan
+        self.coreColour = core ?? .blue
+        self.deepColour = deep ?? .indigo
+        self.unspecifiedColour = unspecified ?? .purple
+        self.inBedColour = inBed ?? .gray
+    }
+    
+    public func color(for stage: SleepStage) -> Color {
+        
+        switch stage {
+            
+        case .awake: return awakeColour
+        case .asleepREM: return remColour
+        case .asleepCore: return coreColour
+        case .asleepDeep: return deepColour
+        case .asleepUnspecified: return unspecifiedColour
+        case .inBed: return inBedColour
+            
+        }
+    }
+}

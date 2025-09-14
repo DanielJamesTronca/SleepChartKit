@@ -38,7 +38,7 @@ public struct DefaultSleepStageColorProvider: SleepStageColorProvider {
         case .asleepDeep:
             return .indigo
         case .asleepUnspecified:
-            return .purple
+            return Color(UIColor.lightGray)
         case .inBed:
             return .gray
         }

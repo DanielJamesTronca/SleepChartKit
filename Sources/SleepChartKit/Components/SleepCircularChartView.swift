@@ -104,6 +104,20 @@ public struct SleepCircularChartView: View {
         var segments: [SleepSegment] = []
         var currentAngle: Double = -90 // Start at top (12 o'clock)
         
+        //making the chart look like the sleep starts at it would on a clock
+        let sleepStart = samples.first!.startDate
+        
+        var h: Double = Double(Calendar.current.component(.hour, from: sleepStart))
+        if h >= 12 { h -= 12 }
+        
+        let m: Double = Double(Calendar.current.component(.minute, from: sleepStart))
+        
+        var difference: Double = (360 / 12) * h
+        difference += (360 / 12) * (m / 60)
+        
+        currentAngle += difference
+        
+        
         for sample in samples {
             let samplePercentage = sample.duration / totalDuration
             let sampleArcDegrees = samplePercentage * totalArcDegrees

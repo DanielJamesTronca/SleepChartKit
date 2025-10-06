@@ -213,7 +213,7 @@ public struct SleepCircularChartView: View {
             let symbolOffset = innerRingRadius
             
             // Moon symbol at start of sleep arc
-            Image(systemName: "moon.fill")
+            Image(systemName: "bed.double.fill")
                 .foregroundColor(.white)
                 .font(.caption2)
                 .offset(

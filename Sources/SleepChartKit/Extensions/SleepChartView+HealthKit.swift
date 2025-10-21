@@ -8,7 +8,7 @@ public extension SleepChartView {
     ///
     /// - Parameters:
     ///   - healthKitSamples: Array of HKCategorySample objects from HealthKit
-    ///   - style: The visual style of the chart (default: .timeline)
+    ///   - style: The visual style of the chart (timeline, circular, or minimal; default: .timeline)
     ///   - circularConfig: Configuration for circular charts (default: .default)
     ///   - colorProvider: Provider for sleep stage colors (default: DefaultSleepStageColorProvider)
     ///   - durationFormatter: Formatter for duration display (default: DefaultDurationFormatter)

@@ -7,6 +7,9 @@ public enum SleepChartStyle {
     
     /// Circular chart with color-coded segments
     case circular
+    
+    /// Minimal timeline chart without axis, legends, or overlays
+    case minimal
 }
 
 /// Configuration options for circular sleep charts

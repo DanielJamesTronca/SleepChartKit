@@ -7,6 +7,7 @@ A clean, lightweight SwiftUI package for displaying beautiful sleep stage visual
 ## Features
 
 - 📊 **Timeline Visualization** - Interactive sleep stage timeline with smooth stage transitions
+- 🧘 **Minimal Style** - Lightweight timeline view without legends or axis chrome
 - 🎨 **Customizable Colors** - Define your own color scheme for different sleep stages
 - ⏰ **Time Axis** - Clear time labels showing sleep session duration
 - 📋 **Legend** - Duration summary for each sleep stage
@@ -29,7 +30,7 @@ Or add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/DanielJamesTronca/SleepChartKit", from: "1.0.0")
+    .package(url: "https://github.com/DanielJamesTronca/SleepChartKit", from: "1.2.0")
 ]
 ```
 
@@ -54,6 +55,17 @@ struct ContentView: View {
             .padding()
     }
 }
+```
+
+### Minimal Timeline
+
+Use the minimal style when you only need the stage bars without the axis or legend:
+
+```swift
+SleepChartView(
+    samples: sleepSamples,
+    style: .minimal
+)
 ```
 
 ### Circular Chart

@@ -27,8 +27,11 @@ final class CircularChartTests: XCTestCase {
     func testSleepChartStyleEnum() {
         let timelineStyle = SleepChartStyle.timeline
         let circularStyle = SleepChartStyle.circular
+        let minimalStyle = SleepChartStyle.minimal
         
         XCTAssertNotEqual(timelineStyle, circularStyle)
+        XCTAssertNotEqual(timelineStyle, minimalStyle)
+        XCTAssertNotEqual(circularStyle, minimalStyle)
     }
     
     func testAppleSleepColorProvider() {
@@ -83,6 +86,18 @@ final class CircularChartTests: XCTestCase {
             samples: samples,
             style: .circular,
             circularConfig: config
+        )
+        
+        XCTAssertNotNil(chart)
+    }
+    
+    @MainActor
+    func testSleepChartViewWithMinimalStyle() {
+        let samples = createTestSamples()
+        
+        let chart = SleepChartView(
+            samples: samples,
+            style: .minimal
         )
         
         XCTAssertNotNil(chart)

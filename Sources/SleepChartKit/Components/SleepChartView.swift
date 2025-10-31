@@ -1,10 +1,11 @@
 import SwiftUI
 
-/// A SwiftUI view that displays sleep data as either a timeline or circular chart.
+/// A SwiftUI view that displays sleep data as a timeline, circular chart, or minimalist timeline.
 ///
-/// The chart can display sleep stages as horizontal bars (timeline style) or as 
-/// color-coded segments around a circle (circular style). Both styles include 
-/// customizable colors and optional legends.
+/// The chart can display sleep stages as horizontal bars (timeline style), as a 
+/// minimalist timeline without overlays (minimal style), or as color-coded segments 
+/// around a circle (circular style). Each style supports customizable colors, and 
+/// timeline-based styles can optionally include legends and axes.
 ///
 /// ## Usage
 /// ```swift
@@ -23,6 +24,12 @@ import SwiftUI
 ///     samples: sleepSamples,
 ///     colorProvider: customColorProvider,
 ///     displayNameProvider: localizedNameProvider
+/// )
+///
+/// // Minimal timeline without axis or legend
+/// SleepChartView(
+///     samples: sleepSamples,
+///     style: .minimal
 /// )
 /// ```
 public struct SleepChartView: View {
@@ -56,7 +63,7 @@ public struct SleepChartView: View {
     ///
     /// - Parameters:
     ///   - samples: The sleep samples to display
-    ///   - style: The visual style of the chart (default: .timeline)
+    ///   - style: The visual style of the chart (timeline, circular, or minimal; default: .timeline)
     ///   - circularConfig: Configuration for circular charts (default: .default)
     ///   - colorProvider: Provider for sleep stage colors (default: DefaultSleepStageColorProvider)
     ///   - durationFormatter: Formatter for duration display (default: DefaultDurationFormatter)
@@ -119,6 +126,8 @@ public struct SleepChartView: View {
             timelineChartView
         case .circular:
             circularChartView
+        case .minimal:
+            minimalChartView
         }
     }
     
@@ -171,6 +180,16 @@ public struct SleepChartView: View {
                 displayNameProvider: displayNameProvider
             )
         }
+    }
+    
+    /// Minimal timeline chart without axis, legends, or overlays
+    private var minimalChartView: some View {
+        SleepTimelineGraph(
+            samples: samples,
+            colorProvider: colorProvider
+        )
+        .frame(height: SleepChartConstants.chartHeight)
+        .clipShape(RoundedRectangle(cornerRadius: SleepChartConstants.chartClipCornerRadius))
     }
     
     // MARK: - Private Views

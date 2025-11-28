@@ -68,7 +68,7 @@ public struct SleepCircularChartView: View {
         backgroundColor: Color = .clear,
         showLabels: Bool = true,
         showIcons: Bool = true,
-        thresholdHours: Double = 9.0
+        thresholdHours: Double = 12
     ) {
         self.samples = samples
         self.colorProvider = colorProvider

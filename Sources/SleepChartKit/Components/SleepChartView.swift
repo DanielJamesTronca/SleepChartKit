@@ -122,10 +122,12 @@ public struct SleepChartView: View {
     
     public var body: some View {
         switch style {
-        case .timeline:
+        case .timeline, .timelineNoDurations:
             timelineChartView
+            
         case .circular:
             circularChartView
+            
         case .minimal:
             minimalChartView
         }
@@ -153,7 +155,8 @@ public struct SleepChartView: View {
                 sleepData: sleepData,
                 colorProvider: colorProvider,
                 durationFormatter: durationFormatter,
-                displayNameProvider: displayNameProvider
+                displayNameProvider: displayNameProvider,
+                hideDurations: style == .timelineNoDurations
             )
             .padding(.top, SleepChartConstants.legendTopPadding)
         }

@@ -6,10 +6,10 @@ import PackageDescription
 let package = Package(
     name: "SleepChartKit",
     platforms: [
-        .iOS(.v15),
-        .macOS(.v12),
-        .watchOS(.v8),
-        .tvOS(.v15)
+        .iOS(.v16),
+        .macOS(.v13),
+        .watchOS(.v9),
+        .tvOS(.v16)
     ],
     products: [
         .library(

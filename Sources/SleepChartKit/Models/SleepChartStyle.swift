@@ -10,6 +10,9 @@ public enum SleepChartStyle {
     
     /// Minimal timeline chart without axis, legends, or overlays
     case minimal
+    
+    /// Timeline with no legend
+    case timelineNoDurations
 }
 
 /// Configuration options for circular sleep charts

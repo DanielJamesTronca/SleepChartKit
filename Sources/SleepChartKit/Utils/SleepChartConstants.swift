@@ -21,7 +21,7 @@ public enum SleepChartConstants {
     public static let componentSpacing: CGFloat = 8
     
     /// Padding for chart legend items
-    public static let legendItemSpacing: CGFloat = 4
+    public static let legendItemSpacing: CGFloat = 20
     
     /// Horizontal padding for time axis labels
     public static let axisHorizontalPadding: CGFloat = 4

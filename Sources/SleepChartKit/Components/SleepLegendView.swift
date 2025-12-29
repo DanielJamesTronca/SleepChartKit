@@ -38,10 +38,10 @@ public struct SleepLegendView: View {
     private var twoRows: [GridItem] {
         [
             GridItem(.adaptive(minimum: SleepChartConstants.legendItemMinWidth,
-                               maximum: SleepChartConstants.legendItemMaxWidth), spacing: 4, alignment: .leading),
+                               maximum: SleepChartConstants.legendItemMaxWidth), spacing: 0, alignment: .leading),
             
             GridItem(.adaptive(minimum: SleepChartConstants.legendItemMinWidth,
-                               maximum: SleepChartConstants.legendItemMaxWidth), spacing: 4, alignment: .leading)
+                               maximum: SleepChartConstants.legendItemMaxWidth), spacing: 0, alignment: .leading)
             
         ]
     }

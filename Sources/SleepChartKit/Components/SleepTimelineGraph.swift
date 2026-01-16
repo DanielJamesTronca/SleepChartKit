@@ -137,7 +137,9 @@ public struct SleepTimelineGraph: View {
                     renderStageConnector(
                         context: context,
                         from: prevRect,
-                        to: currentRect
+                        to: currentRect,
+                        fromStage: previousStage,
+                        toStage: currentStage
                     )
                 }
 
@@ -159,10 +161,12 @@ public struct SleepTimelineGraph: View {
     private func renderStageConnector(
         context: GraphicsContext,
         from startRect: CGRect,
-        to endRect: CGRect
+        to endRect: CGRect,
+        fromStage: SleepStage?,
+        toStage: SleepStage?
     ) {
-        let startPoint = CGPoint(x: startRect.maxX, y: startRect.midY)
-        let endPoint = CGPoint(x: endRect.minX, y: endRect.midY)
+        let startPoint = CGPoint(x: startRect.maxX - SleepChartConstants.connectorOffset, y: startRect.midY)
+        let endPoint = CGPoint(x: endRect.minX + SleepChartConstants.connectorOffset, y: endRect.midY)
         
         // Calculate control points for smooth Bézier curve
         let controlPoint1 = CGPoint(
@@ -179,9 +183,20 @@ public struct SleepTimelineGraph: View {
         connectorPath.move(to: startPoint)
         connectorPath.addCurve(to: endPoint, control1: controlPoint1, control2: controlPoint2)
 
+        var gradient = Gradient(stops: [.init(color: .blue, location: 0), .init(color: .red, location: 1)])
+        
+        if let fromStage,
+           let toStage {
+            
+            let start = colorProvider.color(for: fromStage).opacity(SleepChartConstants.connectorOpacity)
+            let end = colorProvider.color(for: toStage).opacity(SleepChartConstants.connectorOpacity)
+            
+            gradient = Gradient(stops: [.init(color: start, location: 0), .init(color: end, location: 1)])
+        }
+        
         context.stroke(
             connectorPath,
-            with: .color(.gray.opacity(SleepChartConstants.connectorOpacity)),
+            with: .linearGradient(gradient, startPoint: controlPoint1, endPoint: controlPoint2),
             lineWidth: SleepChartConstants.connectorLineWidth
         )
     }

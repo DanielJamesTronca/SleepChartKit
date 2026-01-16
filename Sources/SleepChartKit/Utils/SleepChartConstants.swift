@@ -70,10 +70,13 @@ public enum SleepChartConstants {
     public static let dottedLineOpacity: CGFloat = 0.5
     
     /// Line width for stage connector curves
-    public static let connectorLineWidth: CGFloat = 1.5
+    public static let connectorLineWidth: CGFloat = 1
+    
+    /// Sleep stage connector offset
+    public static let connectorOffset: CGFloat = 0.5
     
     /// Opacity for stage connector curves
-    public static let connectorOpacity: CGFloat = 0.4
+    public static let connectorOpacity: CGFloat = 0.5
     
     /// Control point ratio for connector curve smoothness
     public static let connectorControlPointRatio1: CGFloat = 0.3

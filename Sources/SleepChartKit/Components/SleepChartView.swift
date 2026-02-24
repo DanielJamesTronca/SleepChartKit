@@ -57,6 +57,8 @@ public struct SleepChartView: View {
     /// Provider for sleep stage display names
     private let displayNameProvider: SleepStageDisplayNameProvider
     
+    private let displayLegend: Bool
+    
     // MARK: - Initialization
     
     /// Creates a new sleep chart view with the specified configuration.
@@ -76,7 +78,8 @@ public struct SleepChartView: View {
         colorProvider: SleepStageColorProvider = DefaultSleepStageColorProvider(),
         durationFormatter: DurationFormatter = DefaultDurationFormatter(),
         timeSpanGenerator: TimeSpanGenerator = DefaultTimeSpanGenerator(),
-        displayNameProvider: SleepStageDisplayNameProvider = DefaultSleepStageDisplayNameProvider()
+        displayNameProvider: SleepStageDisplayNameProvider = DefaultSleepStageDisplayNameProvider(),
+        displayLegend: Bool = true
     ) {
         self.samples = samples
         self.style = style
@@ -85,6 +88,7 @@ public struct SleepChartView: View {
         self.durationFormatter = durationFormatter
         self.timeSpanGenerator = timeSpanGenerator
         self.displayNameProvider = displayNameProvider
+        self.displayLegend = displayLegend
     }
     
     // MARK: - Computed Properties
@@ -122,10 +126,12 @@ public struct SleepChartView: View {
     
     public var body: some View {
         switch style {
-        case .timeline:
+        case .timeline, .timelineNoDurations:
             timelineChartView
+            
         case .circular:
             circularChartView
+            
         case .minimal:
             minimalChartView
         }
@@ -147,15 +153,19 @@ public struct SleepChartView: View {
             )
             .padding(.top, SleepChartConstants.axisNegativeTopPadding)
 
-            // Legend showing sleep stages with colors and durations
-            SleepLegendView(
-                activeStages: activeStages,
-                sleepData: sleepData,
-                colorProvider: colorProvider,
-                durationFormatter: durationFormatter,
-                displayNameProvider: displayNameProvider
-            )
-            .padding(.top, SleepChartConstants.legendTopPadding)
+            if displayLegend {
+                
+                // Legend showing sleep stages with colors and durations
+                SleepLegendView(
+                    activeStages: activeStages,
+                    sleepData: sleepData,
+                    colorProvider: colorProvider,
+                    durationFormatter: durationFormatter,
+                    displayNameProvider: displayNameProvider,
+                    hideDurations: style == .timelineNoDurations
+                )
+                .padding(.top, SleepChartConstants.legendTopPadding)
+            }
         }
         .frame(height: SleepChartConstants.totalChartHeight)
     }
@@ -171,14 +181,17 @@ public struct SleepChartView: View {
                 showLabels: circularConfig.showLabels
             )
             
-            // Optional legend for circular charts
-            SleepLegendView(
-                activeStages: activeStages,
-                sleepData: sleepData,
-                colorProvider: colorProvider,
-                durationFormatter: durationFormatter,
-                displayNameProvider: displayNameProvider
-            )
+            if displayLegend {
+                
+                // Optional legend for circular charts
+                SleepLegendView(
+                    activeStages: activeStages,
+                    sleepData: sleepData,
+                    colorProvider: colorProvider,
+                    durationFormatter: durationFormatter,
+                    displayNameProvider: displayNameProvider
+                )
+            }
         }
     }
     
